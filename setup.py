@@ -8,7 +8,7 @@ def read(fname):
 
 setuptools.setup(
     name='Openman',
-    version='0.1.0',
+    version='0.1.1',
     license="MIT",
     zip_safe=False,
     python_requires=">=3.5",

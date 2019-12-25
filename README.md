@@ -2,10 +2,12 @@
 
 A postman to openapi spec conversion tool, which automatically
 
-- Converts your postman collection to OpeanAPI Spec (3.0.0)
+- Converts your postman collection (2.1) to OpeanAPI Spec (3.0.0)
 - Mocks your openapi collection to generate responses from postman examples
 
 Other than these, this tool can easily handle ignored fields in responses (explained below)
+
+**NOTE** Please use postman collection ver 2.1 export (and not 2.0 or earlier). This library only support postman collection 2.1
 
 ## Installation
 
