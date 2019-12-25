@@ -20,7 +20,10 @@ def cli(ctx):
 @click.argument('OUTFILE', required=True)
 def convert(format, ignore, postmanfile, outfile):
     collection_file = os.path.join(postmanfile)
-    ignore_file = os.path.join(ignore) or None
+    try:
+        ignore_file = os.path.join(ignore)
+    except TypeError:
+        ignore_file = None
 
     collection = CollectionParser(from_collection(collection_file))
     spec = Spec(collection)
