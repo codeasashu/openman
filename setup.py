@@ -19,9 +19,10 @@ setuptools.setup(
         'apispec==3.1.0',
         'Click==7.0',
         'jsonpath-rw==1.4.0',
-        'connexion==2.4.0',
+        'connexion~=2.6',
         'swagger-ui-bundle==0.0.6',
         'Faker==2.0.4',
+        'flask-cors==3.0.8',
     ],
     tests_require=[
         'pytest==5.2.2',

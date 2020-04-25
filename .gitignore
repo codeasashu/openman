@@ -1,4 +1,5 @@
 .env
+.eggs/
 app/main/*.log
 app/main/*.db
 .idea

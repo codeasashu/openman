@@ -1,0 +1,11 @@
+Dockerfile
+venv
+.git
+.tox
+.vscode
+.pytest_cache
+.eggs
+build
+bin
+reports
+dist
