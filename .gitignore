@@ -1,8 +1,10 @@
+.eggs/
 .env
 app/main/*.log
 app/main/*.db
 .idea
 venv/
+.vim/
 
 # from https://github.com/github/gitignore/blob/master/Python.gitignore
 # Byte-compiled / optimized / DLL files
