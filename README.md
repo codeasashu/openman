@@ -13,8 +13,6 @@ Other than these, this tool can easily handle ignored fields in responses (expla
 
 **NOTE** This repo needs you to have python 3.5+ installed
 
-As of now, I haven't pushed this tool to pipy repo yet. Hence, its clone only for now.
-
 ### PIP
 
 ```sh
