@@ -3,6 +3,15 @@ import os
 import openman
 from openman.parser import FolderParser
 
+
+def test_folder_nested_request(mock_json):
+    nested_folder_json = mock_json("nested_folder.json")
+    print("a", nested_folder_json)
+    folder = FolderParser(nested_folder_json)
+    items = folder.get_requestitems()
+    assert len(items) == 2
+
+
 class TestFolderParser(unittest.TestCase):
     def setUp(self):
         self.openman = openman
@@ -60,3 +69,4 @@ class TestFolderParser(unittest.TestCase):
         ]).issubset(set([request.summary for request in requests])))
         self.assertEqual(set(['get', 'post', 'put', 'delete', 'patch']),
         set([request.get_request().method for request in requests]))
+
