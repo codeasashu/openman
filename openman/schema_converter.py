@@ -26,7 +26,7 @@ class  SchemaConvertor(object):
     def _walker(self, item, ignore=False):
         if item is None:
             return {}
-        (_type, _format) = python2schematypes[type(item)]
+        (_type, _format) = python2schematypes.get(type(item), "string")
         schema = dict(type = _type)
         if isinstance(item, str):
             if item == self.IGNOREPROP:

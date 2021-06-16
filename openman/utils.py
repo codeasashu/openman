@@ -7,6 +7,7 @@ DEFAULT_STATUS_CODE = 200
 # https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#dataTypeFormat
 python2schematypes = {
     int: ("integer", "int32"),
+    float: ("number", "float"),
     list: ("array", None),
     str: ("string", None),
     bool: ("boolean", "null"),
