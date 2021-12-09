@@ -94,13 +94,15 @@ class Request(object):
         return None
 
     def determine_language(self, body=None):
-        if not body or ('options' not in body):
+        if not body:
             return None
+        mode = body.get('mode', 'raw')
+        if 'options' not in body:
+            return mode
         language = body['options'].get('language', None)
         if not language:
-            mode = body.get('mode', 'raw')
             language = body['options'].get(mode, {"language": None})['language']
-        return language
+        return language or mode
 
     def get_body_contenttype(self, default='*/*'):
         content_type = self.get_headers('Content-Type')
