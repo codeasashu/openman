@@ -1,3 +1,4 @@
+import json
 from ..errors import RequestParserException
 from ..utils import filter_env_var, is_request, format_path, \
     map_to_dict
@@ -19,7 +20,7 @@ class Request(object):
                 or (not is_request(request))):
             raise RequestParserException('Not a valid request')
         self.request = request
-    
+
     @classmethod
     def parse(cls, request=None):
         return cls(request)
@@ -31,27 +32,27 @@ class Request(object):
     @property
     def path(self):
         return self.get_path(True)
-    
+
     @property
     def method(self):
         return self.get_method()
-    
+
     @property
     def query_string(self):
         return self.get_query_string()
-    
+
     @property
     def headers(self):
         return self.get_headers()
-    
+
     @property
     def body(self):
         return self.get_body()
-    
+
     @property
     def body_contenttype(self):
         return self.get_body_contenttype()
-    
+
     def get_description(self):
         return self.request.get('description')
 
@@ -66,12 +67,12 @@ class Request(object):
     # so that other classes can use constants instead of hardcoded
     def get_method(self):
         return self.request['method'].lower() if 'method' in self.request else None
-    
+
     def get_query_string(self):
         if self.request['url'].get('query', None) is None:
             return None
         return map_to_dict(self.request['url'].get('query'))
-    
+
     def get_headers(self, header=None):
         if header is None:
             return map_to_dict(self.request['header'])
@@ -85,13 +86,26 @@ class Request(object):
             bodyitem = self.request['body'][self.request['body']['mode']]
             if isinstance(bodyitem, list):
                 return map_to_dict(bodyitem)
+            # Raw body can be in string, even if content-type is json
+            if self.body_contenttype in ["application/json"] \
+                    and isinstance(bodyitem, str):
+                return json.loads(bodyitem)
             return bodyitem
         return None
-    
+
+    def determine_language(self, body=None):
+        if not body or ('options' not in body):
+            return None
+        language = body['options'].get('language', None)
+        if not language:
+            mode = body.get('mode', 'raw')
+            language = body['options'].get(mode, {"language": None})['language']
+        return language
+
     def get_body_contenttype(self, default='*/*'):
-        mode = self.request['body']['mode']
+        content_type = self.get_headers('Content-Type')
+        if content_type:
+            return content_type
         # We try to deduce from given langugae
-        if mode == 'raw' and 'options' in self.request['body']:
-            if 'language' in self.request['body']['options']:
-                mode = self.request['body']['options']['language'].get(mode, 'raw')
-        return request_contenttype_map.get(mode, default)
+        language = self.determine_language(self.request['body']) or default
+        return request_contenttype_map.get(language)
