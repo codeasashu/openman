@@ -9,7 +9,7 @@ def read(fname):
 
 setuptools.setup(
     name="Openman",
-    version="1.0.2",
+    version="1.1.0",
     license="MIT",
     zip_safe=False,
     python_requires=">=3.5",
