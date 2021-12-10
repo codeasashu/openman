@@ -1,0 +1,169 @@
+{
+  "info": {
+    "_postman_id": "54e215fa-5a96-4851-b066-9b8d8adf14e0",
+    "name": "Multi response API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Test MultiResponse",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"resource\": \"website\",\n    \"email\": \"me@domain.tld\",\n}"
+        },
+        "url": {
+          "raw": "{{API_HOST}}/user/setup",
+          "host": ["{{API_HOST}}"],
+          "path": ["user", "setup"]
+        }
+      },
+      "response": [
+        {
+          "name": "Setup User | Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resource\": \"website\",\n    \"email\": \"me@domain.tld\",\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_HOST}}/user/setup",
+              "host": ["{{API_HOST}}"],
+              "path": ["user", "setup"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": null,
+          "cookie": [],
+          "body": "{\n    \"status\": \"success\",\n    \"message\": \"Setup Complete\",\n    \"username\": \"+919872371113\",\n    \"password\": \"123abc\",\n  \"url\": \"https://app.domain.tld/user_login/{random_key}?a2_iso=in\",\n}"
+        },
+        {
+          "name": "Setup user | Invalid Token",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resource\": \"website\",\n    \"email\": \"me@domain.tld\",\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_HOST}}/user/setup",
+              "host": ["{{API_HOST}}"],
+              "path": ["user", "setup"]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": null,
+          "cookie": [],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"invalid data - {'token': ['Invalid input.']}\"\n}"
+        },
+        {
+          "name": "Setup user | User Blacklisted",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resource\": \"website\",\n    \"email\": \"me@domain.tld\",\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_HOST}}/user/setup",
+              "host": ["{{API_HOST}}"],
+              "path": ["user", "setup"]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": null,
+          "cookie": [],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"Company Name is in blocked list\",\n    \"is_black_listed\": true\n}"
+        },
+        {
+          "name": "Setup user | Request Failed",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resource\": \"website\",\n    \"email\": \"me@domain.tld\",\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_HOST}}/user/setup",
+              "host": ["{{API_HOST}}"],
+              "path": ["user", "setup"]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": null,
+          "cookie": [],
+          "body": "{\n    \"status\": \"error\",\n    \"message\": \"account api error\"\n}"
+        }
+      ]
+    }
+  ]
+}

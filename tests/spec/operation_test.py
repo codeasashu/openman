@@ -122,6 +122,7 @@ def test_responses(uuid, get_folder_fixture, postman_json):
                                 "url": {"type": "string"},
                             },
                             "required": ["args", "headers", "url"],
+                            "title": "GET Request Woops",
                         },
                         "examples": {
                             "GetRequestWoops": {
@@ -152,3 +153,46 @@ def test_responses(uuid, get_folder_fixture, postman_json):
         },
         response_spec,
     )
+
+
+@patch.object(uuid, attribute="uuid4", return_value="a")
+def test_multiple_responses(uuid, mock_json):
+    multi_response_json = mock_json("multi-response.json")
+    assert isinstance(multi_response_json, dict)
+    request_item = RequestItemParser(multi_response_json["item"][0])
+
+    response_spec = Operation(request_item).responses()
+    assert [200, 400] == list(response_spec.keys())
+    assert ["*/*"] == list(response_spec[200]["content"].keys())
+    assert ["*/*"] == list(response_spec[400]["content"].keys())
+    assert ["oneOf"] == list(
+        response_spec[400]["content"]["*/*"]["schema"].keys()
+    )
+    assert {
+        "title": "Setup user | Invalid Token",
+        "type": "object",
+        "properties": {
+            "message": {"type": "string"},
+            "status": {"type": "string"},
+        },
+        "required": ["status", "message"],
+    } == response_spec[400]["content"]["*/*"]["schema"]["oneOf"][0]
+    assert {
+        "title": "Setup user | User Blacklisted",
+        "type": "object",
+        "properties": {
+            "message": {"type": "string"},
+            "status": {"type": "string"},
+            "is_black_listed": {"type": "boolean", "format": "null"},
+        },
+        "required": ["status", "message", "is_black_listed"],
+    } == response_spec[400]["content"]["*/*"]["schema"]["oneOf"][1]
+    assert {
+        "title": "Setup user | Request Failed",
+        "type": "object",
+        "properties": {
+            "message": {"type": "string"},
+            "status": {"type": "string"},
+        },
+        "required": ["status", "message"],
+    } == response_spec[400]["content"]["*/*"]["schema"]["oneOf"][2]
