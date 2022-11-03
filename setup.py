@@ -29,7 +29,7 @@ setuptools.setup(
         "apispec==3.1.0",
         "Click>=7.0",
         "jsonpath-rw==1.4.0",
-        "connexion==2.4.0",
+        "connexion==2.14.1",
         "swagger-ui-bundle==0.0.6",
         "Faker==2.0.4",
     ],
